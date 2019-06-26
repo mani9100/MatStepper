@@ -1,0 +1,230 @@
+<mat-vertical-stepper labelPosition="bottom"   #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Personal Details</ng-template>
+            <mat-form-field>
+                <input matInput #input minlength="5" placeholder="First name" formControlName="First" required>
+                <mat-error *ngIf="firstFormGroup.controls.First.errors?.required">
+                  Enter Your First Name
+                </mat-error>   
+                <mat-error *ngIf="firstFormGroup.controls.First.errors?.minlength">
+                  Enter minimum of 7
+                </mat-error>
+                <mat-error *ngIf="firstFormGroup.controls.First.errors?.pattern">Enter Onlycharacter</mat-error>
+
+            </mat-form-field><br/>
+            <mat-form-field>
+              <input matInput #input minlength="5" placeholder="Second name" formControlName="Second" required>          
+              <mat-error *ngIf="firstFormGroup.controls.Second.errors?.required">
+                Enter Your Second Name
+              </mat-error>
+              <mat-error *ngIf="firstFormGroup.controls.Second.errors?.minlength">
+                  Enter minimum of 7 Charecters
+              </mat-error>
+              <mat-error *ngIf="firstFormGroup.controls.Second.errors?.pattern">Enter  Only character</mat-error>
+
+            </mat-form-field><br/>
+            <mat-form-field>
+                <mat-select matNativeControl  placeholder="Qualification"  formControlName="Quali"> 
+                  <mat-option value="B-Tech">B-tech</mat-option>
+                  <mat-option value="Degree">Degree</mat-option>
+                  <mat-option value="p.g">P.G</mat-option>
+                  <mat-option value="intermediate">intermediate</mat-option>
+                </mat-select>
+                <mat-error *ngIf="firstFormGroup.controls.Quali.errors?.required">
+                    Enter Your Qualification
+                </mat-error>
+              </mat-form-field><br/>
+              <label  >Gender:</label>
+              <mat-radio-group formControlName="Gender" (selectionChange)="Gender($target.value)">
+              <mat-radio-button   value="1">Male</mat-radio-button>
+              <mat-radio-button   value="2">Female</mat-radio-button><br/>
+            </mat-radio-group>            
+            <mat-form-field>
+              <input matInput minlength="5" placeholder="Father name" formControlName="Father" required>
+              <mat-error *ngIf="firstFormGroup.controls.Father.errors?.required">
+                Enter Your Father Name 
+              </mat-error>
+              <mat-error *ngIf="firstFormGroup.controls.Father.errors?.minlength">
+                Enter minimum of 5 characters
+              </mat-error>
+              <mat-error *ngIf="firstFormGroup.controls.Father.errors?.pattern">Enter  Only character</mat-error>
+
+            </mat-form-field><br/>
+            <mat-form-field>
+              <input matInput placeholder="Mother name" formControlName="Mother" minlength="5" required>
+              <mat-error *ngIf="firstFormGroup.controls.Mother.errors?.required">
+                Enter Your Mother Name
+              </mat-error>
+              <mat-error  *ngIf="firstFormGroup.controls.Mother.errors?.minlength">
+                Enter minimum 5 character
+              </mat-error>
+              <mat-error *ngIf="firstFormGroup.controls.Mother.errors?.pattern">Enter  Only character</mat-error>
+
+            </mat-form-field><br/>
+            <mat-form-field>
+              <input matInput placeholder="Enter email" formControlName="Email" required>
+              <mat-error *ngIf="firstFormGroup.controls.Email.errors?.required">
+                 Enter Your EmailId
+              </mat-error>
+              <mat-error *ngIf="firstFormGroup.controls.Email.errors?.pattern">Please Enter Valid MailId</mat-error>
+            </mat-form-field><br/>
+            <mat-checkbox formControlName="Check" required>Confirm Your Details</mat-checkbox>
+            {{firstFormGroup.value|json}}
+            <div>
+                <button mat-raised-button	 matStepperNext color="primary" matStepperNext >Next</button>
+            </div>
+        </form> 
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup" optional>
+        <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Fill out your address</ng-template>
+            <mat-form-field >
+                <mat-select required formControlName="Idproof" placeholder="Select Id proof" (selectionChange)="onIdProofSelection($event.value)">
+                  <mat-option value="Adhaar">Adhaar</mat-option>
+                  <mat-option value="Pan">Pan</mat-option>
+                  <mat-option value="VoterId">VoterId</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div *ngIf="adhar" >  
+                <mat-form-field>
+                  <input matInput minlength="5" placeholder="Enter Adhar Number" formControlName="adharNo"  required>
+                  <mat-error *ngIf="secondFormGroup.controls.adharNo.errors?.required">
+                      Enter Your Number
+                    </mat-error>
+                  <mat-error *ngIf="secondFormGroup.controls.adharNo.errors?.minlength">
+                    Enter minimum 5 character
+                  </mat-error>
+                  <mat-error *ngIf="secondFormGroup.controls.adharNo.errors?.pattern">Enter  Only Digits</mat-error>
+                </mat-form-field><br/>  
+                <mat-form-field>
+                  <input matInput minlength="5" placeholder="Enter Adhar Name" formControlName="adharName" required>
+                  <mat-error *ngIf="secondFormGroup.controls.adharName.errors?.required">
+                      Enter Your Name
+                    </mat-error>
+                    <mat-error *ngIf="secondFormGroup.controls.adharName.errors?.minlength">
+                      Enter minimum 5 character
+                    </mat-error>
+                    <mat-error *ngIf="secondFormGroup.controls.adharName.errors?.pattern">Enter  Only character</mat-error>
+                </mat-form-field>
+              </div>
+              <div *ngIf="pan" >
+                <mat-form-field>
+                  <input matInput minlength="5" placeholder="Enter panName" formControlName="panName" required>
+                  <mat-error *ngIf="secondFormGroup.controls.panName.errors?.required">
+                      Enter Your Name
+                    </mat-error>
+                    <mat-error *ngIf="secondFormGroup.controls.panName.errors?.minlength">
+                        Enter minimum 5 character
+                    </mat-error>
+                    <mat-error *ngIf="secondFormGroup.controls.panName.errors?.pattern">Enter  Only character</mat-error>
+  
+                </mat-form-field><br/>
+                <mat-form-field>
+                  <input matInput minlength="5" placeholder="Enter panNumber" formControlName="panNo" required>
+                  <mat-error *ngIf="secondFormGroup.controls.panNo.errors?.required">
+                      Enter Your Number
+                    </mat-error>
+                    <mat-error *ngIf="secondFormGroup.controls.panNo.errors?.minlength">
+                        Enter minimum 5 character
+                    </mat-error>
+                    <mat-error *ngIf="secondFormGroup.controls.panNo.errors?.pattern">Enter  Only Digits</mat-error>
+                </mat-form-field>
+              </div>
+              <div *ngIf="vote">
+                <mat-form-field>
+                  <input matInput minlength="5" placeholder="Enter voter Name" formControlName="voterName" required>
+                  <mat-error *ngIf="secondFormGroup.controls.voterName.errors?.required">
+                      Enter Your Name
+                    </mat-error>
+                    <mat-error *ngIf="secondFormGroup.controls.voterName.errors?.minlength">
+                        Enter minimum 5 character
+                    </mat-error>
+  
+                </mat-form-field><br/>
+                <mat-form-field>
+                  <input matInput minlength="5" placeholder="EnterNumber" formControlName="voterNo" required>
+                  <mat-error *ngIf="secondFormGroup.controls.voterNo.errors?.required">
+                      Enter Your Number
+                    </mat-error>
+                    <mat-error *ngIf="secondFormGroup.controls.voterNo.errors?.minlength">
+                      Enter minimum 5 character
+                    </mat-error>
+                    <!-- <mat-error *ngIf="secondFormGroup.controls.voterNo.errors?.pattern">Enter  Only Digits</mat-error> -->
+                </mat-form-field>
+              </div><br/>            
+            <mat-form-field>
+                <textarea matInput  placeholder="Temparary Address" formControlName="Address1" minlength="5" required></textarea>
+                <mat-error *ngIf="secondFormGroup.controls.Address1.errors?.required">
+                  Enter Temparary Addres
+                </mat-error>
+                <mat-error *ngIf="secondFormGroup.controls.Address1.errors?.minlength">
+                    Enter minimum 5 character
+                  </mat-error>
+            </mat-form-field><br/>
+            <mat-form-field>
+              <textarea matInput placeholder="Permenent Address" minlength="5" formControlName="Address2" required>
+              </textarea>
+              <mat-error *ngIf="secondFormGroup.controls.Address2.errors?.required">
+                Enter Permenent Address
+              </mat-error>
+              <mat-error *ngIf="secondFormGroup.controls.Address2.errors?.minlength">
+                  Enter minimum 5 length
+                </mat-error>
+            </mat-form-field><br/>
+            <mat-form-field>
+              <mat-select formControlName="state" placeholder="Select State" (selectionChange)="onStateSelection()">
+                <mat-option *ngFor="let state of statesList" [value]="state.stateName">
+                    {{state.stateName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select formControlName="city" placeholder="Select City">
+                  <mat-option *ngFor="let city of cities" [value]="city.cityName">
+                      {{city.cityName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field><br/>
+              <mat-checkbox >I Acept The Terms And Conditions</mat-checkbox>
+            <div>
+                <button mat-button matStepperPrevious >Back</button>
+                <button mat-raised-button	 matStepperNext (click)="openDilogueBox()" >Next</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel >Confirm Details</ng-template>
+        <tr>
+          <th>student Name</th>
+          <th>Qualification</th>
+          <th>Gender</th>
+          <th>Fathername</th>
+          <th>Mothername</th>
+          <th>EmailId</th>  
+          <th>ID prrof</th>   
+          <th>Temparary Address</th>  
+          <th>Permenent Address</th>   
+          <th>State Name</th>   
+          <th>City Name</th>    
+        </tr>
+      <tr>
+        <td>{{firstFormGroup.value.First}} {{firstFormGroup.value.Second}}</td>
+        <td>{{firstFormGroup.value.Quali}}</td>
+        <td>{{firstFormGroup.value.Gender}}</td>
+        <td>{{firstFormGroup.value.Father}}</td>
+        <td>{{firstFormGroup.value.Mother}}</td>
+        <td>{{firstFormGroup.value.Email}}</td>
+        <td>{{firstFormGroup.value.Idproof}}</td>
+        <td>{{secondFormGroup.value.Address1}}</td>
+        <td>{{secondFormGroup.value.Address2}}</td>
+        <td>{{secondFormGroup.value.state}}</td>
+        <td>{{secondFormGroup.value.city}}</td>
+      </tr>
+        <div>
+            <button mat-raised-button	 matStepperPrevious>Back</button>
+            <button mat-raised-button	 (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+  </mat-vertical-stepper>
+  
